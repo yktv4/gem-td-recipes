@@ -1,0 +1,10 @@
+.DS_Store
+.dropbox
+.dropbox.cache
+.idea
+
+node_modules
+npm-debug.log
+
+dev
+dist
