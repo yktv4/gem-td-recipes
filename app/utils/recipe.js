@@ -4,9 +4,7 @@ export const compareRecipes = (a, b) => a.partsLeft.length > b.partsLeft.length
 
 export function parseInitialRecipeStrings(stringsArray) {
   return stringsArray.map(recipe => {
-    const idParts = recipe.split(' = ');
-    const parts = idParts[0];
-    const name = idParts[1];
+    const [parts, name] = recipe.split(' = ');
     return {parts: parts.split('+').map(t => t.trim()), name};
   });
 }
