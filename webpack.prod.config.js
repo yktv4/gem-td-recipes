@@ -32,7 +32,13 @@ module.exports = {
     loaders: [
       {
         test: /\.scss$/,
-        loaders: ["style", "css", "sass"]
+        loaders: ["style", "css?modules", "sass"],
+        include: path.join(__dirname, 'app')
+      },
+      {
+        test: /\.scss$/,
+        loaders: ["style", "css", "sass"],
+        include: path.join(__dirname, 'node_modules')
       },
       {
         test: /\.css$/,
