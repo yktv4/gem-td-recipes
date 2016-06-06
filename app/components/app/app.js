@@ -12,12 +12,14 @@ export default class App extends Component {
   };
 
   calculateAvailableRecipes() {
-    const {availableParts} = this.state;
+    const mapLowerCase = string => string.toLowerCase();
+    const availableParts = this.state.availableParts.map(mapLowerCase);
 
     return this.state.recipes
-      .map(recipe => Object.assign(recipe, {
-        partsHave: intersect(recipe.parts, availableParts),
-        partsLeft: diff(recipe.parts, availableParts)
+      .map(recipe => ({
+        ...recipe,
+        partsHave: intersect(recipe.parts.map(mapLowerCase), availableParts),
+        partsLeft: diff(recipe.parts.map(mapLowerCase), availableParts)
       }))
       .sort(compareRecipes);
   }
@@ -35,20 +37,26 @@ export default class App extends Component {
   }
 
   render() {
-    return (
-      <div className="card">
-        <div className="card-block">
-          <AddPartForm onAdd={::this.onAddAvailablePart} />
+    const {availableParts} = this.state;
 
-          <div>
-            <h4>You're now having the following parts:</h4>
+    return (
+      <div className="m-t-1">
+        <div className="card">
+          <div className="card-block">
+            <div className="clearfix">
+              <div className="col-lg-4 col-lg-push-4">
+                <AddPartForm onAdd={::this.onAddAvailablePart}/>
+              </div>
+            </div>
+
             <div>
-              {this.state.availableParts.map(::this.renderAvailablePartBadge)}
+              {availableParts.map(::this.renderAvailablePartBadge)}
             </div>
           </div>
+        </div>
 
-          <div>
-            <h4>Available recipes:</h4>
+        <div className="card">
+          <div className="card-block">
             <AvailableRecipesList availableRecipes={::this.calculateAvailableRecipes()}/>
           </div>
         </div>
