@@ -4,6 +4,7 @@ import {intersect, diff, withoutIdx} from 'utils/array';
 import {parseInitialRecipeStrings, compareRecipes} from 'utils/recipe';
 import {AddPartForm, AvailableRecipesList, AvailablePartBadge} from 'components';
 import initialRecipeList from 'recipeLists/initial';
+import styles from './styles.scss';
 
 export default class App extends Component {
   state = {
@@ -20,6 +21,10 @@ export default class App extends Component {
         ...recipe,
         partsHave: intersect(recipe.parts.map(mapLowerCase), availableParts),
         partsLeft: diff(recipe.parts.map(mapLowerCase), availableParts)
+      }))
+      .map(recipe => ({
+        ...recipe,
+        percentDone: Math.floor(recipe.partsHave.length / recipe.parts.length * 100)
       }))
       .sort(compareRecipes);
   }
@@ -60,6 +65,10 @@ export default class App extends Component {
             <AvailableRecipesList availableRecipes={::this.calculateAvailableRecipes()}/>
           </div>
         </div>
+
+        <footer className={styles.footer}>
+          &copy; <a href="http://yakutovi.ch">yakutovi.ch</a> | <a href="https://github.com/yktv4/gem-td-recipes" target="_blank">Fork me on Github</a>
+        </footer>
       </div>
     )
   }

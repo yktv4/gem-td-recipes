@@ -6,11 +6,11 @@ export default class AvailableRecipesList extends Component {
     availableRecipes: PropTypes.array.isRequired
   };
 
-  renderSingleRow({name, partsLeft, partsHave, parts}) {
+  renderSingleRow({name, partsLeft, partsHave, percentDone}) {
     return (
       <tr key={name}>
         <td>{name}</td>
-        <td>{Math.round(partsHave.length / parts.length * 100)}%</td>
+        <td>{percentDone}%</td>
         <td>{partsLeft.join(' + ')}</td>
         <td>{partsHave.join(' + ')}</td>
       </tr>
