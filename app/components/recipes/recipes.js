@@ -2,6 +2,7 @@ import React, {Component, PropTypes} from 'react';
 
 import {intersect, diff, withoutIdx} from 'utils/array';
 import {parseInitialRecipeStrings, compareRecipes} from 'utils/recipe';
+import {AddPartForm, AvailableRecipesList, AvailablePartBadge} from 'components';
 
 export default class Recipes extends Component {
   static propTypes = {
@@ -10,22 +11,10 @@ export default class Recipes extends Component {
 
   state = {
     availableParts: [],
-    availablePartsInputValue: '',
     recipes: parseInitialRecipeStrings(this.props.initialRecipeList)
   };
 
-  addAvailablePart() {
-    const {availablePartsInputValue, availableParts} = this.state;
-    availableParts.push(availablePartsInputValue);
-    this.setState({availableParts});
-
-  }
-
-  removeAvailablePart(index) {
-    this.setState({availableParts: withoutIdx(this.state.availableParts, index)});
-  }
-
-  renderClosestRecipes() {
+  calculateAvailableRecipes() {
     const {availableParts} = this.state;
 
     return this.state.recipes
@@ -33,44 +22,37 @@ export default class Recipes extends Component {
         partsHave: intersect(recipe.parts, availableParts),
         partsLeft: diff(recipe.parts, availableParts)
       }))
-      .sort(compareRecipes)
-      .map(({name, partsLeft, partsHave}) => (
-        <div key={name}>
-          <span>{`${partsLeft.length} parts left for "${name}": ${partsLeft.join(' + ')}. `}</span>
-          <span>{`you already have: ${partsHave.join(' + ')}`}</span>
-        </div>
-      ));
+      .sort(compareRecipes);
+  }
+
+  onAddAvailablePart(part) {
+    this.setState({availableParts: this.state.availableParts.slice(0).concat([part])});
+  }
+
+  removeAvailablePart(index) {
+    this.setState({availableParts: withoutIdx(this.state.availableParts, index)});
+  }
+
+  renderAvailablePartBadge(part, idx) {
+    return <AvailablePartBadge key={idx} part={part} onRemove={() => this.removeAvailablePart(idx)}/>;
   }
 
   render() {
-    const {availablePartsInputValue} = this.state;
-
     return (
       <div>
-        <div>
-          <input
-            type="text"
-            placeholder="tower id"
-            value={availablePartsInputValue}
-            onChange={e => this.setState({availablePartsInputValue: e.target.value})}
-          />
-          <button onClick={::this.addAvailablePart}>add</button>
-        </div>
+
+        <AddPartForm onAdd={::this.onAddAvailablePart} />
 
         <div>
           <h4>You're now having the following parts:</h4>
           <div>
-            {this.state.availableParts.map(
-              (part, idx) => <span key={part + idx}>
-                {part} <a href="javascript:void(0)" onClick={e => this.removeAvailablePart(idx)}>[X]</a>
-              </span>
-            )}
+            {this.state.availableParts.map(::this.renderAvailablePartBadge)}
           </div>
         </div>
 
         <div>
-          <h4>Here's what you have:</h4>
-          {this.renderClosestRecipes()}
+          <h4>Available recipes:</h4>
+          <AvailableRecipesList availableRecipes={::this.calculateAvailableRecipes()}/>
         </div>
       </div>
     )
