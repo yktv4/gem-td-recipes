@@ -10,7 +10,12 @@ module.exports = {
     'babel-polyfill',
     path.join(__dirname, 'app')
   ],
-  resolve: {extensions: ['', '.js', '.jsx']},
+  resolve: {
+    root: [
+      path.resolve('./app')
+    ],
+    extensions: ['', '.js', '.jsx']
+  },
   output: {
     path: path.join(__dirname, 'dev'),
     filename: 'bundle.js'
@@ -24,6 +29,16 @@ module.exports = {
   ],
   module: {
     loaders: [
+      {
+        test: /\.scss$/,
+        loaders: ["style", "css?sourceMap&modules", "sass"],
+        include: path.join(__dirname, 'app')
+      },
+      {
+        test: /\.scss$/,
+        loaders: ["style", "css?sourceMap", "sass"],
+        include: path.join(__dirname, 'node_modules')
+      },
       {
         test: /\.css$/,
         loaders: ['style', 'css'],

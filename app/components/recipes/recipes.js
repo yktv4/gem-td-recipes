@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 
-import {intersect, diff, withoutIdx} from './../utils/array';
-import {parseInitialRecipeStrings, compareRecipes} from './../utils/recipe';
+import {intersect, diff, withoutIdx} from 'utils/array';
+import {parseInitialRecipeStrings, compareRecipes} from 'utils/recipe';
 
 export default class Recipes extends Component {
   static propTypes = {
