@@ -66,7 +66,7 @@ export default class App extends Component {
           </div>
         </div>
 
-        <footer className={styles.footer}>
+        <footer className={`text-xs-center ${styles.footer}`}>
           &copy; <a href="http://yakutovi.ch">yakutovi.ch</a> | <a href="https://github.com/yktv4/gem-td-recipes" target="_blank">Fork me on Github</a>
         </footer>
       </div>
