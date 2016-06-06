@@ -1,8 +1,7 @@
-import './css/style.css'
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-import React from 'react'
-import ReactDOM from 'react-dom'
-import Recipes from './components/Recipes'
-import initialRecipeList from './recipeLists/initial';
+import './css/style.css';
+import App from './components/app'
 
-ReactDOM.render(<Recipes initialRecipeList={initialRecipeList} />, document.getElementById('root'));
+ReactDOM.render(<App/>, document.getElementById('app'));

@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react'
+import React, {Component, PropTypes} from 'react';
+
 import {intersect, diff, withoutIdx} from './../utils/array';
 import {parseInitialRecipeStrings, compareRecipes} from './../utils/recipe';
 
