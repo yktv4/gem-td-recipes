@@ -1,15 +1,15 @@
 import React, {Component, PropTypes} from 'react';
 
 import {intersect, diff, withoutIdx} from 'utils/array';
-import {parseInitialRecipeStrings, compareRecipes} from 'utils/recipe';
+import {parseRedditGemTdThreadRecipes, compareRecipes} from 'utils/recipe';
 import {AddPartForm, AvailableRecipesList, AvailablePartBadge} from 'components';
-import initialRecipeList from 'recipeLists/initial';
+import initialRecipeList from 'recipeLists/redditGemTdThread';
 import styles from './styles.scss';
 
 export default class App extends Component {
   state = {
     availableParts: [],
-    recipes: parseInitialRecipeStrings(initialRecipeList)
+    recipes: parseRedditGemTdThreadRecipes(initialRecipeList)
   };
 
   calculateAvailableRecipes() {
