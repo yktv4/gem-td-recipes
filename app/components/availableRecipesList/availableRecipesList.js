@@ -2,7 +2,9 @@ import React, {Component, PropTypes} from 'react';
 import {joinComponents} from 'utils/react';
 import styles from './styles.scss';
 
-const Part = ({name, onClick}) => <a href="javascript:void(0)" onClick={onClick} className={styles.partLeft}>{name}</a>;
+const Part = ({name, onClick, title}) => <a href="javascript:void(0)" className={styles.partLeft} {...{onClick, title}}>
+  {name}
+</a>;
 
 export default class AvailableRecipesList extends Component {
   static propTypes = {
@@ -12,11 +14,19 @@ export default class AvailableRecipesList extends Component {
   };
 
   renderPartLeft(name) {
-    return <Part name={name} onClick={e => this.props.onAddPart(name)}/>;
+    return <Part
+      name={name}
+      onClick={e => this.props.onAddPart(name)}
+      title="Click here to mark this part as available"
+    />;
   }
 
   renderPartHave(name) {
-    return <Part name={name} onClick={e => this.props.onRemovePart(name)}/>;
+    return <Part
+      name={name}
+      onClick={e => this.props.onRemovePart(name)}
+      title="Click here to delete this part from available parts"
+    />;
   }
 
   renderSingleRow({name, partsLeft, partsHave, percentDone}) {
