@@ -11,8 +11,10 @@ export function parseSteamCommunityRecipes(stringsArray) {
 
 export function parseRedditGemTdThreadRecipes(objectFromGameFiles) {
   const result = [];
+  const format = string => string.split('_').join(' ');
+
   for (let name in objectFromGameFiles) {
-    result.push({parts: objectFromGameFiles[name], name});
+    result.push({parts: objectFromGameFiles[name].map(format), name: format(name)});
   }
   return result;
 }
