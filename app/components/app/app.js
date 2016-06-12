@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 
-import {intersect, diff, withoutIdx} from 'utils/array';
+import {intersect, diff, withoutIdx, withoutVal} from 'utils/array';
 import {parseRedditGemTdThreadRecipes, compareRecipes} from 'utils/recipe';
 import {AddPartForm, AvailableRecipesList, AvailablePartBadge} from 'components';
 import initialRecipeList from 'recipeLists/redditGemTdThread';
@@ -33,6 +33,10 @@ export default class App extends Component {
     this.setState({availableParts: this.state.availableParts.slice(0).concat([part])});
   }
 
+  onRemoveAvailablePart(part) {
+    this.setState({availableParts: withoutVal(this.state.availableParts, part)});
+  }
+
   removeAvailablePart(index) {
     this.setState({availableParts: withoutIdx(this.state.availableParts, index)});
   }
@@ -62,7 +66,11 @@ export default class App extends Component {
 
         <div className="card">
           <div className="card-block">
-            <AvailableRecipesList availableRecipes={::this.calculateAvailableRecipes()}/>
+            <AvailableRecipesList
+              availableRecipes={::this.calculateAvailableRecipes()}
+              onAddPart={::this.onAddAvailablePart}
+              onRemovePart={::this.onRemoveAvailablePart}
+            />
           </div>
         </div>
 
